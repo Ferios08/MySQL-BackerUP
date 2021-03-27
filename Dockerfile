@@ -1,8 +1,8 @@
-FROM alpine:latest
+FROM ubuntu:bionic
 
-RUN apk add --no-cache \
-        mysql-client \
-    ; \
+RUN apt update && apt install gnupg2 curl cron -y && \
+     apt install -y mysql-client && \
+    echo "mysql-client hold" | dpkg --set-selections && \
     mkdir -p /mysql-backup
 
 ENV COMPRESS_CMD="gzip" \
@@ -15,3 +15,4 @@ VOLUME ["/mysql-backup"]
 
 ENTRYPOINT ["/run.sh"]
 CMD ["/usr/sbin/crond", "-l 2", "-f"]
+
