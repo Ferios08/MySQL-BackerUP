@@ -14,5 +14,4 @@ RUN chmod +x run.sh
 VOLUME ["/mysql-backup"]
 
 ENTRYPOINT ["/run.sh"]
-CMD ["/usr/sbin/crond", "-l 2", "-f"]
 
