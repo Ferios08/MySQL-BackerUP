@@ -1,0 +1,30 @@
+  
+name: AUTO DEPLOY CONTAINER
+
+env:
+   DOCKER_HUB_PASSWORD: ${{ secrets.DOCKER_HUB_PASSWORD }}
+   USERNAME: ${{ secrets.USERNAME }}
+   REPOSITORY_NAME: ${{ secrets.REPOSITORY_NAME }}
+   IMAGE_TAG: ${{ secrets.IMAGE_TAG }}
+
+   
+on:
+  push:
+    branches:
+      - master
+
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v2
+      - name: Install Docker
+        uses: docker/setup-buildx-action@v1
+      - name: Login to Docker
+        run: docker login --username=$USERNAME --password=$DOCKER_HUB_PASSWORD
+      - name: Build Image
+        run: docker build -t $USERNAME/$REPOSITORY_NAME:$IMAGE_TAG .
+      - name: Push Image
+        run: docker push $USERNAME/$REPOSITORY_NAME:$IMAGE_TAG
