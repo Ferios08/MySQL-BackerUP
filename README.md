@@ -6,12 +6,12 @@ For a prebuilt version of this Docker image, you can use mine: `firasdotcom/mysq
 
 ## Usage
 
-    docker run -d \
+    docker run -d --name mysql-backerup \
         --env MYSQL_HOST=mysql.host \
-        --env MYSQL_PORT=27017 \
+        --env MYSQL_PORT=3306 \
         --env MYSQL_USER=admin \
         --env MYSQL_PASS=password \
-        --volume host.folder:/mysql-backup
+        --volume host.folder:/mysql-backup \
         mysql-backerup
 
 Moreover, if you link `mysql-backerup` to a mysql container(e.g. `mysql`) with an alias named mysql, this image will try to auto load the `host`, `port`, `user`, `pass` if possible.
@@ -25,7 +25,6 @@ Moreover, if you link `mysql-backerup` to a mysql container(e.g. `mysql`) with a
     MYSQL_PORT          the port number of your mysql database
     MYSQL_USER          the username of your mysql database
     MYSQL_PASS          the password of your mysql database
-    MYSQL_PASS_FILE     the secret file of your mysql database password (optional)
     MYSQL_DB            the database name to dump. Default: `--all-databases`
     EXTRA_OPTS          the extra options to pass to mysqldump command
     COMPRESS            if set, compress the backup using `COMPRESS_CMD`
@@ -39,7 +38,7 @@ Moreover, if you link `mysql-backerup` to a mysql container(e.g. `mysql`) with a
 
 See the list of backups, you can run:
 
-    docker exec mysql-backup ls /mysql-backup
+    docker exec mysql-backerup ls /mysql-backup
 
 To restore database from a certain backup:
 
