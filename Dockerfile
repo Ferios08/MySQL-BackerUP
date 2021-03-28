@@ -13,5 +13,5 @@ ADD run.sh /run.sh
 RUN chmod +x run.sh
 VOLUME ["/mysql-backup"]
 
-ENTRYPOINT ["/run.sh"]
+CMD ["/run.sh"]
 
